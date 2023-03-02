@@ -14,26 +14,26 @@
             <div class="pos-receipt-contact">
         <div class="company-info-custom">
 
-            <div>
-                                VAT:
-                                <t t-esc="receipt.company.vat"/></div>
-            <div class="pos-receipt-contact">
-                <t t-esc="env.pos.company.street || '468 Bissoondoyal Avenue, La Caverne, Vacoas'"/>
-                <br/>
+<!--            <div>-->
+            <!--                                VAT:-->
+            <!--                                <t t-esc="receipt.company.vat"/></div>-->
+            <!--            <div class="pos-receipt-contact">-->
+            <t t-esc="env.pos.company.street || '468 Bissoondoyal Avenue, La Caverne, Vacoas'"/>
+            <br/>
 
-                <t t-if="receipt.company.phone">
+            <t t-if="receipt.company.phone">
                         <span>  Tel:</span>
-                    <t t-esc="receipt.company.phone"/>
-                    <br/>
+                <t t-esc="receipt.company.phone"/>
+                <br/>
                     </t>
 
-                Brn:
-                <t t-esc="env.pos.company.company_registry"/>
-                <!--                            <div style="font-size: 17px;" class="company-brn text-centered"><b>CUPAMA LTD</b></div>-->
-                <!--                                                 <div><span>468 Bissoondoyal Avenue, La Caverne, Vacoas</span><br/>-->
-                <!--                     <span>Tel: 606-1053</span><br></br>-->
-                <!--                    <span>Brn: C22188698</span> <br></br></div>-->
-            </div>
+            Brn:
+            <t t-esc="env.pos.company.company_registry"/>
+            <!--                            <div style="font-size: 17px;" class="company-brn text-centered"><b>CUPAMA LTD</b></div>-->
+            <!--                                                 <div><span>468 Bissoondoyal Avenue, La Caverne, Vacoas</span><br/>-->
+            <!--                     <span>Tel: 606-1053</span><br></br>-->
+            <!--                    <span>Brn: C22188698</span> <br></br></div>-->
+
                         </div>
                 <t t-if="receipt.cashier">
 <div class="cashier">
@@ -89,28 +89,28 @@
 
             <div>------------------------------------------------------</div>
 
-            <!-- Subtotal -->
+            <!--            &lt;!&ndash; Subtotal &ndash;&gt;-->
 
-            <div style="font-size: 21px;">
-<b>SUBTOTAL</b>
-                <b class="pos-receipt-right-align" t-esc="env.pos.format_currency(receipt.total_with_tax)"/>
-</div>
-            <div>
-<span>VAT Exclusive</span>
-                <span class="pos-receipt-right-align"
-                      t-esc="env.pos.format_currency(receipt.total_with_tax-receipt.total_tax)"/>
-</div>
+            <!--            <div style="font-size: 21px;">-->
+            <!--<b>SUBTOTAL</b>-->
+            <!--                <b class="pos-receipt-right-align" t-esc="env.pos.format_currency(receipt.total_with_tax)"/>-->
+            <!--</div>-->
+            <!--            <div>-->
+            <!--<span>VAT Exclusive</span>-->
+            <!--                <span class="pos-receipt-right-align"-->
+            <!--                      t-esc="env.pos.format_currency(receipt.total_with_tax-receipt.total_tax)"/>-->
+            <!--</div>-->
 
-            <t t-foreach="receipt.tax_details" t-as="tax" t-key="tax.name">
-<div>
-    <span>
-        <t t-esc="tax.name"/>
-    </span>
-    <span t-esc='env.pos.format_currency(tax.amount)'
-          class="pos-receipt-right-align"/>
-</div>
-</t>
-            <div>------------------------------------------------------</div>
+            <!--            <t t-foreach="receipt.tax_details" t-as="tax" t-key="tax.name">-->
+            <!--<div>-->
+            <!--    <span>-->
+            <!--        <t t-esc="tax.name"/>-->
+            <!--    </span>-->
+            <!--    <span t-esc='env.pos.format_currency(tax.amount)'-->
+            <!--          class="pos-receipt-right-align"/>-->
+            <!--</div>-->
+            <!--</t>-->
+            <!--            <div>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>-->
 
             <div style="font-size: 21px;">
 <b>TOTAL</b>
@@ -161,17 +161,17 @@ Total Taxes
             <div class="thank-note">
 <div class="company-brn" style="text-align:center;">Thank you for shopping with us!</div>
 </div>
-<!--            <div style="font-size: 14px;text-align: center">-->
-<!--<t t-if="receipt.company.website">-->
-<!--    <t t-esc="receipt.company.website"/>-->
-<!--</t>-->
-<!--                                     <br/>-->
-<!--                                     <t t-if="receipt.company.email">-->
-<!--                                         <t t-esc="receipt.company.email"/>-->
-<!--                                    </t>-->
-<!--                                     <br/>-->
+            <!--            <div style="font-size: 14px;text-align: center">-->
+            <!--<t t-if="receipt.company.website">-->
+            <!--    <t t-esc="receipt.company.website"/>-->
+            <!--</t>-->
+            <!--                                     <br/>-->
+            <!--                                     <t t-if="receipt.company.email">-->
+            <!--                                         <t t-esc="receipt.company.email"/>-->
+            <!--                                    </t>-->
+            <!--                                     <br/>-->
 
-<!--</div>-->
+            <!--</div>-->
 
 
             <!--                 <div t-if="receipt.footer_html" class="pos-receipt-center-align">
