@@ -12,12 +12,10 @@ _logger = logging.getLogger("WooCommerce")
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    brn_no = fields.Char('BRN')
+    # brn_no = fields.Char('BRN')
 
 
-
-
-class Res_company_inherit(models.Model):
-        _inherit = 'res.company'
-
-        brn_number = fields.Char('BRN NO')
+# class Res_company_inherit(models.Model):
+#         _inherit = 'res.company'
+#
+#         brn_number = fields.Char('BRN NO')
