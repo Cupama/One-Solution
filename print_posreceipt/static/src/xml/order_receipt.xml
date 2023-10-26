@@ -18,7 +18,14 @@
             <!--                                VAT:-->
             <!--                                <t t-esc="receipt.company.vat"/></div>-->
             <!--            <div class="pos-receipt-contact">-->
-            <t t-esc="env.pos.company.street || '468 Bissoondoyal Avenue, La Caverne, Vacoas'"/>
+             <!-- vidurath -->
+ <t t-if="receipt.company.name == 'Babo Cupama Household Co Ltd'">
+ 	114, Royal-Road, Beau-Bassin
+ </t>
+ <t t-else="">
+      468 Bissoondoyal Avenue, La Caverne, Vacoas
+ </t>
+ <!-- vidurath -->
             <br/>
 
             <t t-if="receipt.company.phone">
