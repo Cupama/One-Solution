@@ -166,7 +166,7 @@ Total Taxes
                  <div>------------------------------------------------------</div>
 
             <div class="thank-note">
-<div class="company-brn" style="text-align:center;">Exchange will be considered upon presentation of this receipt within 7 days of purchase</div>
+<div class="company-brn" style="text-align:center;">Any Valid exchange will be considered upon presentation of this receipt within 7 days of purchase</div>
 </div>
             <!--            <div style="font-size: 14px;text-align: center">-->
             <!--<t t-if="receipt.company.website">-->
