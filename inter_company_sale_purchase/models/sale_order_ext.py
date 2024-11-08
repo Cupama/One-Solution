@@ -21,6 +21,8 @@ class SaleOrderExt(models.Model):
                 child_companies.append(company)
         for child in child_companies:
             if record.partner_id.id == child.partner_id.id:
+                if not record.order_line:
+                    raise ValidationError("Please enter product in order lines.")
                 record.action_confirm()
                 po_vals = {
                     'partner_id': parent_company.partner_id.id,
@@ -37,7 +39,7 @@ class SaleOrderExt(models.Model):
                         'date_planned': fields.Date.today(),
                     }) for line in record.order_line],
                 }
-            purchase_order = self.env['purchase.order'].sudo().create(po_vals)
-            purchase_order.button_confirm()
+                purchase_order = self.env['purchase.order'].sudo().create(po_vals)
+                purchase_order.button_confirm()
 
         return record
