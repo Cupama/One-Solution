@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="RefundButton" t-inherit="point_of_sale.RefundButton" owl="1">
+        <xpath expr="//div" position="replace">
+            <t t-if="props.isHidden != False">
+                <div class="control-button refund-button">
+                    <i class="fa fa-undo" role="img" aria-label="Refund" title="Refund" />
+                    Refund
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

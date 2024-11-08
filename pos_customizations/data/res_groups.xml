@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record model="res.groups" id="group_allow_refund">
+            <field name="name">Allow POS Refund</field>
+        </record>
+        <record model="res.groups" id="group_allow_backend">
+            <field name="name">Allow Backend</field>
+        </record>
+    </data>
+</odoo>
