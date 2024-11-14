@@ -15,7 +15,7 @@ class PosScreen(home.Home):
             pos_conf = request.env.user.pos_conf_id
             if pos_conf:
                 if not pos_conf.current_session_id:
-                    request.env['pos.session'].sudo().create({
+                    session = request.env['pos.session'].sudo().create({
                         'user_id': request.env.uid,
                         'config_id': pos_conf.id
                     })

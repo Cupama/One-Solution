@@ -9,33 +9,32 @@ odoo.define("pos_customizations.RefundButton", function (require) {
         class extends RefundButton {
             setup() {
                 super.setup();
+                debugger;
                 this.isHidden = false;
-                this.env.pos.user.is_hidden = 0;
+                const userId = this.env.pos.user.id
                 rpc.query({
                     model: 'res.users',
-                    method: 'has_group',
-                    args: ['pos_customizations.group_allow_refund'],
+                    method: 'check_cashier_group',
+                    args: [userId],
                 }).then((hasGroup) => {
                     this.isHidden = !hasGroup;
                     if (this.isHidden) {
-
                         this.el.style.display = 'none';
                     } else {
                         this.el.style.display = '';
                     }
                 });
                 rpc.query({
-                        model: 'res.users',
-                        method: 'has_group',
-                        args: ['pos_customizations.group_allow_backend'],
-                    }).then((hasGroup) => {
-                        if (hasGroup) {
-                            this.env.pos.user.is_hidden = 1;
-                        } else {
-                            this.env.pos.user.is_hidden = 0;
-                        }
-                    });
-                debugger;
+                    model: 'res.users',
+                    method: 'has_group',
+                    args: ['pos_customizations.group_allow_backend'],
+                }).then((hasGroup) => {
+                    if (hasGroup) {
+                        this.env.pos.user.is_hidden = 1;
+                    } else {
+                        this.env.pos.user.is_hidden = 0;
+                    }
+                });
             }
         };
     Registries.Component.extend(RefundButton, PosRefundButtonCustom);
