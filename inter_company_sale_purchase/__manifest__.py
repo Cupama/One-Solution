@@ -5,7 +5,7 @@
     'category': 'Inter Company Sale',
     'summary': 'Sale and Purchase',
     'author': 'Team Alpha',
-    'depends': ['sale_management', 'purchase', 'point_of_sale'],
+    'depends': ['sale_management', 'purchase'],
     'data': [
         'views/purchase_order_ext.xml',
     ],
