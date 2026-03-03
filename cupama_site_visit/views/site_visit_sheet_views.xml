@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         SEQUENCE
+    ═══════════════════════════════════════════════════════════ -->
+  <record id="seq_site_visit_sheet" model="ir.sequence">
+    <field name="name">Site Visit Sheet</field>
+    <field name="code">cupama.site.visit.sheet</field>
+    <field name="prefix">SVS/%(year)s/</field>
+    <field name="padding">4</field>
+    <field name="company_id" eval="False"/>
+  </record>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         FORM VIEW
+    ═══════════════════════════════════════════════════════════ -->
+  <record id="view_site_visit_sheet_form" model="ir.ui.view">
+    <field name="name">cupama.site.visit.sheet.form</field>
+    <field name="model">cupama.site.visit.sheet</field>
+    <field name="arch" type="xml">
+      <form string="Site Visit Sheet">
+        <header>
+          <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+          <button name="action_done" string="Mark as Done" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+          <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"/>
+          <button name="action_reset_draft" string="Reset to Draft" type="object" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+        </header>
+
+        <sheet>
+          <div class="oe_title">
+            <h1>
+              <field name="name" readonly="1"/>
+            </h1>
+          </div>
+
+          <!-- ── Section 1: Identification ── -->
+          <group string="CUPAMA LTD — Site Visit Sheet" col="4">
+            <field name="date"/>
+            <field name="expected_installation_date"/>
+            <field name="sale_order_id" readonly="1"/>
+            <field name="technician_name"/>
+            <field name="client_name"/>
+            <field name="tel_no"/>
+            <field name="address" colspan="2"/>
+          </group>
+
+          <!-- ── Section 2: Measurements &amp; Accessories ── -->
+          <group string="Measurements &amp; Accessories">
+            <group>
+              <field name="skirting" widget="boolean_toggle"/>
+              <field name="bar_t_reducer" widget="boolean_toggle"/>
+            </group>
+            <group>
+              <field name="floor_level"/>
+            </group>
+          </group>
+
+          <!-- ══════════════════════════════════════════════════
+                         House Status Checklist
+                         Tableau croisé : chaque item a une colonne NEW
+                         et une colonne RENOVATION avec Yes/No en radio
+                    ══════════════════════════════════════════════════ -->
+          <group string="House Status Checklist">
+            <div colspan="2">
+
+              <!-- En-têtes des colonnes -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;
+                                        margin-bottom: 0;">
+
+                <div style="padding: 10px 14px;
+                                            background: #f8f9fa;
+                                            border: 1px solid #dee2e6;
+                                            font-weight: 700;
+                                            font-size: 13px;
+                                            color: #495057;">
+                                    Item
+                </div>
+                <div style="padding: 10px 14px;
+                                            background: #d4edda;
+                                            border: 1px solid #dee2e6;
+                                            border-left: none;
+                                            font-weight: 800;
+                                            font-size: 13px;
+                                            color: #155724;
+                                            text-align: center;
+                                            letter-spacing: 1px;">
+                                    ✦ NEW
+                </div>
+                <div style="padding: 10px 14px;
+                                            background: #fff3cd;
+                                            border: 1px solid #dee2e6;
+                                            border-left: none;
+                                            font-weight: 800;
+                                            font-size: 13px;
+                                            color: #856404;
+                                            text-align: center;
+                                            letter-spacing: 1px;">
+                                    🔧 RENOVATION
+                </div>
+              </div>
+
+              <!-- Ligne a. Ease of Access -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;">
+                <div style="padding: 10px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;">
+                                    a. Ease of Access
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #f8fff9;">
+                  <field name="ease_of_access_new" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #fffef5;">
+                  <field name="ease_of_access_renovation" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+              </div>
+
+              <!-- Ligne b. Moveable and Heavy Items -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;">
+                <div style="padding: 10px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;">
+                                    b. Moveable and Heavy Items
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #f8fff9;">
+                  <field name="moveable_heavy_items_new" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #fffef5;">
+                  <field name="moveable_heavy_items_renovation" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+              </div>
+
+              <!-- Ligne c. Electrical Point -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;">
+                <div style="padding: 10px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;">
+                                    c. Electrical Point
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #f8fff9;">
+                  <field name="electrical_point_new" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #fffef5;">
+                  <field name="electrical_point_renovation" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+              </div>
+
+              <!-- Ligne d. Delivery Possible -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;">
+                <div style="padding: 10px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;">
+                                    d. Delivery Possible
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #f8fff9;">
+                  <field name="delivery_possible_new" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #fffef5;">
+                  <field name="delivery_possible_renovation" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+              </div>
+
+              <!-- Ligne e. Removal of Flooring/Skirting -->
+              <div style="display: grid;
+                                        grid-template-columns: 2fr 1fr 1fr;
+                                        gap: 0;
+                                        margin-bottom: 16px;">
+                <div style="padding: 10px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;">
+                                    e. Removal of Flooring / Skirting
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #f8fff9;">
+                  <field name="removal_flooring_skirting_new" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+                <div style="padding: 8px 14px;
+                                            border: 1px solid #dee2e6;
+                                            border-top: none;
+                                            border-left: none;
+                                            background: #fffef5;">
+                  <field name="removal_flooring_skirting_renovation" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </div>
+              </div>
+
+            </div>
+          </group>
+
+          <!-- ── Section: Flooring Surface + Photos ── -->
+          <group string="Flooring &amp; Site Photos">
+            <field name="flooring_surface_status" widget="radio" options="{'horizontal': true}"/>
+            <field name="photos_taken" widget="radio" options="{'horizontal': true}"/>
+            <field name="client_informed" widget="radio" options="{'horizontal': true}" string="Client Informed to Clear Areas"/>
+            <field name="photo_ids" widget="many2many_binary" colspan="2"/>
+          </group>
+
+          <!-- ── Notebook ── -->
+          <notebook>
+
+            <page string="Dimensions (Office Use)">
+              <field name="dimension_ids">
+                <tree editable="bottom">
+                  <field name="room_name"/>
+                  <field name="length"/>
+                  <field name="width"/>
+                  <field name="area" readonly="1"/>
+                  <field name="notes"/>
+                </tree>
+              </field>
+              <group class="oe_subtotal_footer">
+                <field name="total_area" readonly="1" string="Total Area (m²)"/>
+              </group>
+            </page>
+
+            <page string="Conditions &amp; Signature">
+              <group>
+                <div colspan="2" class="alert alert-info" role="alert">
+                  <strong>Conditions agreed as follows:</strong>
+                  <ol style="margin-top:8px;">
+                    <li>Client agrees to move/displace all moveable items causing hindrance/obstruction to the smooth installation of SPC Flooring, Skirting and fittings.</li>
+                    <li>In case moveable items cannot be displaced, client needs to provide at least 2 helpers to move items accordingly.</li>
+                  </ol>
+                </div>
+                <field name="conditions_agreed" widget="boolean_toggle" string="Client Agrees to Conditions"/>
+                <field name="client_signature" widget="signature" string="Client Signature" attrs="{'invisible': [('conditions_agreed', '=', False)]}"/>
+              </group>
+            </page>
+
+            <page string="Additional Remarks">
+              <field name="additional_remarks" placeholder="Enter any additional remarks here…"/>
+            </page>
+
+          </notebook>
+        </sheet>
+
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         TREE VIEW
+    ═══════════════════════════════════════════════════════════ -->
+  <record id="view_site_visit_sheet_list" model="ir.ui.view">
+    <field name="name">cupama.site.visit.sheet.list</field>
+    <field name="model">cupama.site.visit.sheet</field>
+    <field name="arch" type="xml">
+      <tree string="Site Visit Sheets" decoration-muted="state == 'cancelled'" decoration-success="state == 'done'" decoration-info="state == 'confirmed'">
+        <field name="name"/>
+        <field name="date"/>
+        <field name="client_name"/>
+        <field name="sale_order_id"/>
+        <field name="technician_name"/>
+        <field name="expected_installation_date"/>
+        <field name="floor_level"/>
+        <field name="total_area" string="Area (m²)"/>
+        <field name="state" widget="badge" decoration-success="state == 'done'" decoration-warning="state == 'confirmed'" decoration-muted="state == 'cancelled'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         SEARCH VIEW
+    ═══════════════════════════════════════════════════════════ -->
+  <record id="view_site_visit_sheet_search" model="ir.ui.view">
+    <field name="name">cupama.site.visit.sheet.search</field>
+    <field name="model">cupama.site.visit.sheet</field>
+    <field name="arch" type="xml">
+      <search string="Site Visit Sheets">
+        <field name="name"/>
+        <field name="client_name"/>
+        <field name="technician_name"/>
+        <field name="sale_order_id"/>
+        <separator/>
+        <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+        <filter string="Confirmed" name="confirmed" domain="[('state','=','confirmed')]"/>
+        <filter string="Done" name="done" domain="[('state','=','done')]"/>
+        <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+        <group expand="0" string="Group By">
+          <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+          <filter string="Floor Level" name="group_floor" context="{'group_by': 'floor_level'}"/>
+          <filter string="Technician" name="group_tech" context="{'group_by': 'technician_name'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         ACTION
+    ═══════════════════════════════════════════════════════════ -->
+  <record id="action_site_visit_sheet" model="ir.actions.act_window">
+    <field name="name">Site Visit Sheets</field>
+    <field name="res_model">cupama.site.visit.sheet</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_site_visit_sheet_search"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+                Create your first Site Visit Sheet!
+      </p>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════════════════════════
+         MENU ITEMS
+    ═══════════════════════════════════════════════════════════ -->
+  <menuitem id="menu_site_visit_root" name="Site Visits" parent="sale.sale_menu_root" sequence="25"/>
+
+  <menuitem id="menu_site_visit_sheet" name="Site Visit Sheets" parent="menu_site_visit_root" action="action_site_visit_sheet" sequence="1"/>
+
+</odoo>
