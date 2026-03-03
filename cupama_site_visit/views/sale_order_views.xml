@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Smart button on Sale Order form -->
+  <record id="view_sale_order_site_visit_button" model="ir.ui.view">
+    <field name="name">sale.order.site.visit.button</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+
+      <!-- Smart button in stat_buttons area -->
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button class="oe_stat_button" name="action_view_site_visits" type="object" icon="fa-map-marker" attrs="{'invisible': [('site_visit_count', '=', 0)]}">
+          <field name="site_visit_count" string="Site Visits" widget="statinfo"/>
+        </button>
+
+        <button class="oe_stat_button" name="action_create_site_visit" type="object" icon="fa-plus-circle" string="New Site Visit" attrs="{'invisible': [('site_visit_count', '!=', 0)]}"/>
+      </xpath>
+
+    </field>
+  </record>
+
+  <!-- Smart button on Quotation form (same view in v17) -->
+  <!-- sale.order is used for both Quotation and Sale Order in Odoo -->
+
+</odoo>

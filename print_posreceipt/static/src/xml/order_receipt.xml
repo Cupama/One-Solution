@@ -36,6 +36,11 @@
 
             Brn:
             <t t-esc="env.pos.company.company_registry"/>
+            <br/>
+            <t t-if="receipt.company.name != 'Babo Cupama Household Co Ltd'">
+                VAT: 28047271
+            </t>
+
             <!--                            <div style="font-size: 17px;" class="company-brn text-centered"><b>CUPAMA LTD</b></div>-->
             <!--                                                 <div><span>468 Bissoondoyal Avenue, La Caverne, Vacoas</span><br/>-->
             <!--                     <span>Tel: 606-1053</span><br></br>-->
@@ -60,6 +65,13 @@
 </div>
 </t>
         </div>
+               <t t-if="receipt.company.name != 'Babo Cupama Household Co Ltd'">
+                   <br/>
+                   <div class="pos-receipt-center-align">
+                       <strong>Vat Invoice </strong>
+                   </div>
+               </t>
+
             <br/>
 
             <!-- Orderlines -->
