@@ -2,6 +2,7 @@
 
 {
     'name': 'Inter Company Sale Purchase',
+    'version': '19.0.1.0.0',
     'category': 'Inter Company Sale',
     'summary': 'Sale and Purchase',
     'author': 'Team Alpha',

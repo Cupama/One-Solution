@@ -73,51 +73,51 @@ class SiteVisitSheet(models.Model):
     # a. Ease of Access
     ease_of_access_new = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='New',
+        string='Ease of Access (New)',
     )
     ease_of_access_renovation = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='Renovation',
+        string='Ease of Access (Renovation)',
     )
 
     # b. Moveable and heavy items
     moveable_heavy_items_new = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='New',
+        string='Moveable & Heavy Items (New)',
     )
     moveable_heavy_items_renovation = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='Renovation',
+        string='Moveable & Heavy Items (Renovation)',
     )
 
     # c. Electrical point
     electrical_point_new = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='New',
+        string='Electrical Point (New)',
     )
     electrical_point_renovation = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='Renovation',
+        string='Electrical Point (Renovation)',
     )
 
     # d. Delivery possible
     delivery_possible_new = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='New',
+        string='Delivery Possible (New)',
     )
     delivery_possible_renovation = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='Renovation',
+        string='Delivery Possible (Renovation)',
     )
 
     # e. Removal of flooring/skirting
     removal_flooring_skirting_new = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='New',
+        string='Removal of Flooring/Skirting (New)',
     )
     removal_flooring_skirting_renovation = fields.Selection(
         selection=[('yes', 'Yes'), ('no', 'No')],
-        string='Renovation',
+        string='Removal of Flooring/Skirting (Renovation)',
     )
 
     # ── Flooring Surface Status ──────────────────────────────────
