@@ -26,13 +26,13 @@ class SaleOrder(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Site Visit Sheets',
             'res_model': 'cupama.site.visit.sheet',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('sale_order_id', '=', self.id)],
             'context': {
                 'default_sale_order_id': self.id,
                 'default_client_name': self.partner_id.name,
                 'default_address': self.partner_id._display_address(),
-                'default_tel_no': self.partner_id.phone or self.partner_id.mobile,
+                'default_tel_no': self.partner_id.phone,
             },
         }
         if len(visits) == 1:
@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
             'sale_order_id': self.id,
             'client_name': self.partner_id.name,
             'address': self.partner_id._display_address(),
-            'tel_no': self.partner_id.phone or self.partner_id.mobile or '',
+            'tel_no': self.partner_id.phone or '',
         })
         return {
             'type': 'ir.actions.act_window',

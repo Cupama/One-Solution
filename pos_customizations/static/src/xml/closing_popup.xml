@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Add a "Backend" button for managers to leave the POS without closing
+         the session. Visible only to users in `group_allow_backend`. -->
+    <t t-name="pos_customizations.ClosePosPopup" t-inherit="point_of_sale.ClosePosPopup" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='downloadSalesReport']" position="before">
+            <button t-if="backendAccess.allowed" class="button btn btn-secondary"
+                t-att-class="this.ui.isSmall ? 'w-100' : 'btn-lg'"
+                t-on-click="() => this.pos.redirectToBackend()"
+                title="Visit the backend while keeping the session open">Backend</button>
+        </xpath>
+    </t>
+
+</templates>
