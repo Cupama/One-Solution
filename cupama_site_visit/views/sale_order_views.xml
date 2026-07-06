@@ -10,11 +10,11 @@
 
       <!-- Smart button in stat_buttons area -->
       <xpath expr="//div[@name='button_box']" position="inside">
-        <button class="oe_stat_button" name="action_view_site_visits" type="object" icon="fa-map-marker" attrs="{'invisible': [('site_visit_count', '=', 0)]}">
+        <button class="oe_stat_button" name="action_view_site_visits" type="object" icon="fa-map-marker" invisible="site_visit_count == 0">
           <field name="site_visit_count" string="Site Visits" widget="statinfo"/>
         </button>
 
-        <button class="oe_stat_button" name="action_create_site_visit" type="object" icon="fa-plus-circle" string="New Site Visit" attrs="{'invisible': [('site_visit_count', '!=', 0)]}"/>
+        <button class="oe_stat_button" name="action_create_site_visit" type="object" icon="fa-plus-circle" string="New Site Visit" invisible="site_visit_count != 0"/>
       </xpath>
 
     </field>

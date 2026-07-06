@@ -9,7 +9,7 @@
                 <page name="point_of_sale" string="Point Of Sale">
                     <group>
                         <group>
-                            <field name="pos_conf_id" options="{'no_create': True, 'no_open': True}"/>/>
+                            <field name="pos_conf_id" options="{'no_create': True, 'no_open': True}"/>
                         </group>
                     </group>
                 </page>

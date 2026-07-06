@@ -1,23 +1,20 @@
-from odoo import http
+# -*- coding: utf-8 -*-
 from odoo.http import request
-import werkzeug
-from odoo.addons.web.controllers.main import home
+from odoo.addons.web.controllers.home import Home
 
 
-class PosScreen(home.Home):
+class PosLoginRedirect(Home):
+    """Send POS-only users straight to their configured Point of Sale after login.
 
-    @http.route('/web/login', type='http', auth="none")
-    def web_login(self, redirect=None, **kw):
-        res = super().web_login(redirect=redirect, **kw)
-        if request.env.user.has_group('pos_customizations.group_allow_backend'):
-            return res
-        else:
-            pos_conf = request.env.user.pos_conf_id
-            if pos_conf:
-                if not pos_conf.current_session_id:
-                    session = request.env['pos.session'].sudo().create({
-                        'user_id': request.env.uid,
-                        'config_id': pos_conf.id
-                    })
-                return werkzeug.utils.redirect('/pos/ui')
-        return res
+    Users that belong to ``group_allow_backend`` keep the standard backend
+    redirection. Everyone else who has a POS configured (``pos_conf_id``) is
+    redirected to ``/pos/ui/<config_id>``, which opens (creating it if needed)
+    the matching POS session.
+    """
+
+    def _login_redirect(self, uid, redirect=None):
+        url = super()._login_redirect(uid, redirect=redirect)
+        user = request.env['res.users'].sudo().browse(uid)
+        if not user.has_group('pos_customizations.group_allow_backend') and user.pos_conf_id:
+            return '/pos/ui/%d' % user.pos_conf_id.id
+        return url
