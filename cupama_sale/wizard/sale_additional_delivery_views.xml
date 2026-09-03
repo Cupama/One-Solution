@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_additional_delivery_form" model="ir.ui.view">
+        <field name="name">cupama.sale.additional.delivery.form</field>
+        <field name="model">cupama.sale.additional.delivery</field>
+        <field name="arch" type="xml">
+            <form string="Additional Delivery">
+                <group>
+                    <group>
+                        <field name="sale_order_id"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group>
+                        <field name="reason" placeholder="e.g. broken planks replaced on site"/>
+                    </group>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                        <field name="can_edit_price" column_invisible="1"/>
+                        <field name="price_unit" readonly="not can_edit_price"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_confirm" string="Create Delivery" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

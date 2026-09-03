@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cupama_sale_additional_delivery,cupama.sale.additional.delivery,model_cupama_sale_additional_delivery,sales_team.group_sale_salesman,1,1,1,1
+access_cupama_sale_additional_delivery_line,cupama.sale.additional.delivery.line,model_cupama_sale_additional_delivery_line,sales_team.group_sale_salesman,1,1,1,1

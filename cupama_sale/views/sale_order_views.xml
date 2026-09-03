@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_cupama" model="ir.ui.view">
+        <field name="name">sale.order.form.cupama</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- #17: create an additional delivery from a confirmed order -->
+            <xpath expr="//header" position="inside">
+                <button name="action_open_additional_delivery_wizard"
+                        string="Additional Delivery"
+                        type="object"
+                        invisible="state != 'sale'"/>
+            </xpath>
+
+            <!-- #16: customer payments linked to this order -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_payments"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-money"
+                        invisible="payment_count == 0">
+                    <div class="o_stat_info">
+                        <field name="payment_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Payments</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- #10: price and discount read-only without the dedicated right -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_invoiced']" position="after">
+                <field name="can_edit_price" column_invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="attributes">
+                <attribute name="readonly">qty_invoiced &gt; 0 or not can_edit_price</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="attributes">
+                <attribute name="readonly">not can_edit_price</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
