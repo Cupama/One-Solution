@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_cupama" model="ir.ui.view">
+        <field name="name">res.partner.form.cupama</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- #1: WhatsApp number just before the phone -->
+            <xpath expr="(//field[@name='phone'])[1]/.." position="before">
+                <div class="d-flex align-items-baseline w-md-50">
+                    <i class="fa fa-fw me-1 fa-whatsapp text-primary" title="WhatsApp"/>
+                    <field name="whatsapp_number" class="w-100" widget="phone" placeholder="WhatsApp Number"/>
+                </div>
+            </xpath>
+
+            <!-- #6: ID Num for individuals, next to the VAT Num -->
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="cupama_id_num" invisible="is_company"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
