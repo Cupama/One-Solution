@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Runs on every install/update: creates the journals and POS payment
+         methods, links them to the shops whose session is closed. -->
+    <function model="cupama.payment.setup" name="run"/>
+</odoo>
