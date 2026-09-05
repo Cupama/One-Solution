@@ -15,24 +15,28 @@
                 </div>
             </xpath>
 
-            <!-- The anchor is the group holding the website field, not just
-                 //field[@name='vat']: a database may carry other views adding
-                 a vat field elsewhere in the form, and the first match would
-                 then drop our fields outside of the group (no label). -->
+            <!-- The production database carries Studio/legacy partner views:
+                 the vat field is not always a direct child of a form group
+                 there, so the label of a field placed next to it is not
+                 always generated. Hence the wide anchor (first vat of the
+                 form, wherever it is) and the explicit <label/> elements,
+                 which render in both a group and a plain container. -->
 
-            <!-- #2: the BRN sits in the "Sales & Purchase / Misc" group by
-                 default; Cupama uses it as often as the VAT Num, so the node
-                 is moved right under it (moved, not duplicated). -->
-            <xpath expr="//group[field[@name='website']]/field[@name='vat']" position="after">
+            <!-- #2: the BRN (moved from "Sales & Purchase / Misc", not
+                 duplicated) shown right under the VAT Num. -->
+            <xpath expr="//field[@name='vat']" position="after">
+                <label for="company_registry" string="BRN" invisible="parent_id or not is_company"/>
                 <xpath expr="//group[@name='misc']/field[@name='company_registry']" position="move"/>
             </xpath>
-            <xpath expr="//group[field[@name='website']]/field[@name='company_registry']" position="attributes">
+            <xpath expr="//field[@name='company_registry']" position="attributes">
+                <attribute name="nolabel">1</attribute>
                 <attribute name="string">BRN</attribute>
             </xpath>
 
             <!-- #6: ID Num for individuals, right under the VAT Num -->
-            <xpath expr="//group[field[@name='website']]/field[@name='vat']" position="after">
-                <field name="cupama_id_num" string="ID Num" invisible="is_company"
+            <xpath expr="//field[@name='vat']" position="after">
+                <label for="cupama_id_num" string="ID Num" invisible="is_company"/>
+                <field name="cupama_id_num" nolabel="1" invisible="is_company"
                        placeholder="e.g. A1234567890123"/>
             </xpath>
 
