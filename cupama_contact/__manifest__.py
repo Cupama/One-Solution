@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cupama Contacts',
-    'version': '19.0.1.0.4',
+    'version': '19.0.1.0.5',
     'category': 'Contacts',
     'summary': 'WhatsApp number, BRN / VAT Num / ID Num with duplicate control',
     'description': """

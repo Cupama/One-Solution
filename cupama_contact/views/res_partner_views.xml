@@ -15,38 +15,22 @@
                 </div>
             </xpath>
 
-            <!-- The production partner form carries Studio/legacy views where
-                 the vat field is inlined in a plain container, not a form
-                 group: anything inserted next to it flows on the same line
-                 and gets no automatic label. Each field is therefore shipped
-                 in its own full-width block (w-100 forces its own line in a
-                 flow container, colspan="2" keeps a full row in a standard
-                 group) with an explicit label. -->
-
-            <!-- #6: ID Num for individuals, on its own line under the VAT Num -->
-            <xpath expr="//field[@name='vat']" position="after">
-                <div class="w-100 d-flex align-items-baseline" colspan="2"
-                     invisible="is_company">
-                    <label for="cupama_id_num" string="ID Num"
-                           class="o_form_label fw-bold text-nowrap me-3 mb-0"/>
-                    <field name="cupama_id_num" nolabel="1" class="flex-grow-1"
-                           placeholder="e.g. A1234567890123"/>
-                </div>
+            <!-- #2 BRN / #6 ID Num, between the VAT Num and the Website.
+                 The anchor is the website field, NOT the vat one: on the
+                 production database a Studio/legacy view wraps the vat in an
+                 inline container, and anything inserted next to it lands
+                 inside that cell (label on the same line, no alignment).
+                 The website field sits in a regular form group there, so
+                 plain sibling fields get their automatic, aligned label. -->
+            <xpath expr="//field[@name='website']" position="before">
+                <field name="cupama_id_num" string="ID Num" invisible="is_company"
+                       placeholder="e.g. A1234567890123"/>
+                <field name="company_registry" string="BRN"
+                       invisible="parent_id or not is_company"
+                       placeholder="e.g. C07048459"/>
             </xpath>
-
-            <!-- #2: BRN on its own line under the VAT Num. A nested
-                 position="move" is silently ignored inside new content, so
-                 the block ships its own node and the native one is removed
-                 from "Sales & Purchase / Misc" (the field exists only once). -->
-            <xpath expr="//field[@name='vat']" position="after">
-                <div class="w-100 d-flex align-items-baseline" colspan="2"
-                     invisible="parent_id or not is_company">
-                    <label for="company_registry" string="BRN"
-                           class="o_form_label fw-bold text-nowrap me-3 mb-0"/>
-                    <field name="company_registry" nolabel="1" class="flex-grow-1"
-                           placeholder="e.g. C07048459"/>
-                </div>
-            </xpath>
+            <!-- the native BRN node is removed from "Sales & Purchase / Misc"
+                 so the field exists only once in the form -->
             <xpath expr="//group[@name='misc']/field[@name='company_registry']" position="replace"/>
 
         </field>
