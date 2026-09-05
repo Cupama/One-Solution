@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from odoo import Command, models
+from odoo import Command, api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -47,6 +47,7 @@ class CupamaPaymentSetup(models.AbstractModel):
             'name': name, 'journal_id': journal.id, 'company_id': company.id,
         })
 
+    @api.model
     def run(self):
         """Create the journals/POS methods and link them to every shop.
 
