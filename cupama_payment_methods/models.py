@@ -2,6 +2,7 @@
 import logging
 
 from odoo import Command, api, models
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -65,7 +66,7 @@ class CupamaPaymentSetup(models.AbstractModel):
             for name, code, jtype in PAYMENT_METHODS:
                 journal = self._get_or_create_journal(company, name, code, jtype)
                 methods |= self._get_or_create_pos_method(company, name, journal)
-            configs = self.env['pos.config'].with_context(active_test=False).search(
+            configs = self.env['pos.config'].search(
                 [('company_id', '=', company.id)])
             # Odoo refuses any change to the payment methods of a POS whose
             # session is still open: those shops are linked on the next
@@ -80,7 +81,16 @@ class CupamaPaymentSetup(models.AbstractModel):
             # a cash method cannot be shared between several POS: only the
             # bank-type methods are spread over every shop.
             shareable = methods.filtered(lambda m: m.journal_id.type != 'cash')
-            if configs and shareable:
-                configs.write({
-                    'payment_method_ids': [Command.link(m.id) for m in shareable],
-                })
+            links = [Command.link(m.id) for m in shareable]
+            for config in configs:
+                # one write per POS under a savepoint: linking a method
+                # re-validates every method of the shop, and legacy data
+                # (e.g. a cash method shared by two shops before the v19
+                # constraint existed) must not block the whole install.
+                try:
+                    with self.env.cr.savepoint():
+                        config.write({'payment_method_ids': links})
+                except (UserError, ValidationError) as error:
+                    _logger.warning(
+                        "Cupama payment methods: POS %s skipped: %s",
+                        config.name, error)
