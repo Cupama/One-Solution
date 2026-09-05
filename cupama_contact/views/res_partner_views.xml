@@ -15,9 +15,17 @@
                 </div>
             </xpath>
 
-            <!-- #6: ID Num for individuals, next to the VAT Num -->
+            <!-- #2: the BRN sits in the "Sales & Purchase / Misc" group by
+                 default; Cupama uses it as often as the VAT Num, so it is
+                 moved next to it in the header of the form. -->
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="cupama_id_num" invisible="is_company"/>
+                <xpath expr="//group[@name='misc']/field[@name='company_registry']" position="move"/>
+            </xpath>
+
+            <!-- #6: ID Num for individuals, right under the VAT Num -->
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="cupama_id_num" invisible="is_company"
+                       placeholder="e.g. A1234567890123"/>
             </xpath>
 
         </field>
