@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cupama Sales Customizations',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Sales',
     'summary': 'Price control, activity log, payment/order link and additional deliveries',
     'description': """

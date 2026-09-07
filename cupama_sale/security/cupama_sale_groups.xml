@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- In Odoo 19 the groups of one privilege render as EXCLUSIVE levels of
+         a single dropdown on the user form. The price right therefore needs
+         its own privilege: attached to the Sales privilege it would compete
+         with User/Administrator instead of combining with them. -->
+    <record id="res_groups_privilege_cupama_sales" model="res.groups.privilege">
+        <field name="name">Cupama Sales</field>
+        <field name="sequence">91</field>
+    </record>
+
     <record id="group_sale_edit_price" model="res.groups">
         <field name="name">Sales: Edit Unit Price</field>
-        <field name="privilege_id" ref="sales_team.res_groups_privilege_sales"/>
+        <field name="privilege_id" ref="res_groups_privilege_cupama_sales"/>
         <field name="comment">Members can change the unit price and the discount on quotations and sales orders.</field>
         <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
     </record>
