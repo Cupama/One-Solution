@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import _, api, models
+from odoo import _, api, fields, models
 
 from . import log_utils
 
@@ -43,3 +43,37 @@ class ProductTemplate(models.Model):
                     _("Product updated by %s.", self.env.user.name), changes,
                 ))
         return res
+
+    # -- #15 indicative reservation ---------------------------------------
+    quote_reservation_count = fields.Integer(
+        string='Reserved on Quotes',
+        compute='_compute_quote_reservation_count',
+        compute_sudo=True,
+    )
+
+    def _compute_quote_reservation_count(self):
+        # product_template_id is searchable but not stored: usable in the
+        # domain, not in a read_group.
+        lines = self.env['sale.order.line'].search(self._quote_reservation_domain())
+        for template in self:
+            orders = lines.filtered(
+                lambda l: l.product_id.product_tmpl_id == template).order_id
+            template.quote_reservation_count = len(orders)
+
+    def _quote_reservation_domain(self):
+        return [
+            ('is_reserved_for_quote', '=', True),
+            ('order_id.state', 'in', ('draft', 'sent', 'sale')),
+            ('product_template_id', 'in', self.ids),
+        ]
+
+    def action_view_quote_reservations(self):
+        self.ensure_one()
+        lines = self.env['sale.order.line'].search(self._quote_reservation_domain())
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Reserved for Quotes'),
+            'res_model': 'sale.order',
+            'view_mode': 'list,form',
+            'domain': [('id', 'in', lines.order_id.ids)],
+        }

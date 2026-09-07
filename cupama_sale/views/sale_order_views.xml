@@ -40,6 +40,24 @@
                 <attribute name="readonly">not can_edit_price</attribute>
             </xpath>
 
+            <!-- #15: indicative reservation, toggled directly on the line -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_invoiced']" position="after">
+                <field name="is_reserved_for_quote" widget="boolean_toggle" optional="show"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- #15: filter the quotations carrying reserved products -->
+    <record id="view_sales_order_filter_cupama" model="ir.ui.view">
+        <field name="name">sale.order.search.cupama</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="my_sale_orders_filter" position="after">
+                <filter string="Reserved Products" name="reserved_products"
+                        domain="[('order_line.is_reserved_for_quote', '=', True)]"/>
+            </filter>
         </field>
     </record>
 
