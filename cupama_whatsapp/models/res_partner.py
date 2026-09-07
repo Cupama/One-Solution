@@ -15,7 +15,13 @@ class ResPartner(models.Model):
     def _get_whatsapp_target(self):
         """International number for wa.me, digits only (e.g. 23058207534)."""
         self.ensure_one()
-        raw = self.whatsapp_number or self.mobile or self.phone or ''
+        # 'mobile' no longer exists on recent Odoo 19 revisions: only use
+        # the candidate fields the model actually carries.
+        raw = ''
+        for fname in ('whatsapp_number', 'mobile', 'phone'):
+            if fname in self._fields and self[fname]:
+                raw = self[fname]
+                break
         digits = re.sub(r'\D', '', raw)
         if not digits:
             return False
