@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cupama Site Visit Sheet',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Sales',
     'summary': 'Site Visit Sheet for SPC Flooring Installation',
     'description': """
@@ -13,6 +13,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/site_visit_sheet_views.xml',
+        'views/site_visit_calendar_views.xml',
         'views/sale_order_views.xml',
     ],
     'installable': True,

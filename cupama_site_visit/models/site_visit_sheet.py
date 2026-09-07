@@ -38,6 +38,12 @@ class SiteVisitSheet(models.Model):
         store=True,
         readonly=True,
     )
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Responsible',
+        default=lambda self: self.env.user,
+        tracking=True,
+    )
     client_name = fields.Char(string='Name', tracking=True)
     tel_no = fields.Char(string='Tel No')
     address = fields.Text(string='Address')

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- #12: day/week/month overview of the surveys and the installations.
+         Two calendars because the sheet carries two planning dates:
+         the visit itself and the expected installation. -->
+
+    <record id="view_site_visit_sheet_calendar" model="ir.ui.view">
+        <field name="name">cupama.site.visit.sheet.calendar.visits</field>
+        <field name="model">cupama.site.visit.sheet</field>
+        <field name="arch" type="xml">
+            <calendar string="Site Visits" date_start="date" color="user_id"
+                      mode="week" event_open_popup="1" quick_create="0">
+                <field name="client_name"/>
+                <field name="user_id" avatar_field="avatar_128"/>
+                <field name="technician_name"/>
+                <field name="sale_order_id"/>
+                <field name="state" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_site_visit_sheet_calendar_installation" model="ir.ui.view">
+        <field name="name">cupama.site.visit.sheet.calendar.installations</field>
+        <field name="model">cupama.site.visit.sheet</field>
+        <field name="arch" type="xml">
+            <calendar string="Installations" date_start="expected_installation_date"
+                      color="user_id" mode="week" event_open_popup="1" quick_create="0">
+                <field name="client_name"/>
+                <field name="user_id" avatar_field="avatar_128"/>
+                <field name="technician_name"/>
+                <field name="sale_order_id"/>
+                <field name="state" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_site_visit_calendar" model="ir.actions.act_window">
+        <field name="name">Visits Calendar</field>
+        <field name="res_model">cupama.site.visit.sheet</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="view_id" ref="view_site_visit_sheet_calendar"/>
+        <field name="domain">[('state', '!=', 'cancelled')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No site visit planned yet</p>
+        </field>
+    </record>
+
+    <record id="action_installation_calendar" model="ir.actions.act_window">
+        <field name="name">Installations Calendar</field>
+        <field name="res_model">cupama.site.visit.sheet</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="view_id" ref="view_site_visit_sheet_calendar_installation"/>
+        <field name="domain">[('state', '!=', 'cancelled'), ('expected_installation_date', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No installation planned yet</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_site_visit_calendar" name="Visits Calendar"
+              parent="menu_site_visit_root" action="action_site_visit_calendar" sequence="2"/>
+    <menuitem id="menu_installation_calendar" name="Installations Calendar"
+              parent="menu_site_visit_root" action="action_installation_calendar" sequence="3"/>
+
+</odoo>
