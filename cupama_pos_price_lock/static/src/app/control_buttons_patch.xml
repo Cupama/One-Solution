@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!-- #10: the global Discount button (pos_discount) follows the same
+         right as the price: managers only when restrict_price_control is on. -->
+    <t t-name="cupama_pos_price_lock.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('js_discount')]" position="attributes">
+            <attribute name="t-if">pos.config.module_pos_discount and pos.config.discount_product_id and pos.cashier._role !== 'minimal' and pos.cashierHasPriceControlRights()</attribute>
+        </xpath>
+    </t>
+</templates>
