@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cupama Sales Customizations',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Sales',
     'summary': 'Price control, activity log, payment/order link and additional deliveries',
     'description': """
@@ -21,6 +21,7 @@
         'views/sale_order_views.xml',
         'views/account_payment_views.xml',
         'views/stock_picking_views.xml',
+        'views/product_template_views.xml',
     ],
     'installable': True,
     'application': False,

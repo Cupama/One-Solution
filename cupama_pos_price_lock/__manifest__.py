@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cupama POS Price Lock',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Point of Sale',
     'summary': 'Restrict POS price modifications to managers on every shop',
     'description': """
@@ -10,8 +10,13 @@
         Cashiers must ask a POS manager to change a price.
     """,
     'author': 'A.Maximilien',
-    'depends': ['point_of_sale'],
+    'depends': ['point_of_sale', 'pos_discount'],
     'post_init_hook': '_enable_price_restriction',
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'cupama_pos_price_lock/static/src/**/*',
+        ],
+    },
     'installable': True,
     'application': False,
     'auto_install': False,

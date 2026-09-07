@@ -11,6 +11,7 @@ PRICE_FIELDS = {
 }
 LOGGED_LINE_FIELDS = (
     'product_id', 'name', 'product_uom_qty', 'product_uom_id', 'price_unit', 'discount',
+    'is_reserved_for_quote',
 )
 
 
@@ -28,6 +29,15 @@ class SaleOrderLine(models.Model):
         copy=False,
         readonly=True,
         help="Line added afterwards through the Additional Delivery action.",
+    )
+    # #15 indicative reservation: earmark the product for this quote.
+    # The stock is NOT blocked (client to confirm if a hard reservation is
+    # wanted later); toggles are traced in the chatter via LOGGED_LINE_FIELDS.
+    is_reserved_for_quote = fields.Boolean(
+        string='Reserved',
+        copy=False,
+        help="This product is earmarked for this quotation. Informative "
+             "only: the stock stays available for other orders.",
     )
     additional_delivery_ref_id = fields.Many2one(
         comodel_name='stock.reference',
